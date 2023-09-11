@@ -80,6 +80,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/api/sync/{reg_code}', function ($reqCode) {
+    \Illuminate\Support\Facades\Artisan::call('sync:egr '. $reqCode . ' '. $reqCode);
+
+    $contractor = \App\Models\Contractor::where('reg_code', $reqCode)->first();
+
+    return $contractor && $contractor->updated_at->isToday()
+        ? ['status' => 'synced']
+        : ['status' => 'error'] ;
+});
+
 Route::get('/page', function () {
     return redirect()->to('/page/1');
 });
@@ -108,6 +118,15 @@ Route::get('/page/{page}', function ($page) {
 
 });
 
+Route::get('/banks', function () {
+    $banks = \App\Models\Bank::all();
+    return view('banks.index', compact('banks'));
+});
+
+
+// https://egr.gov.by/api/v2/egr/getJurNamesByPeriod/2023-01-01/2023-01-30
+
+
 Route::get('/{reg_code}', function ($regCode) {
 
     $contractor = \App\Models\Contractor::where('reg_code', $regCode)->firstOrFail();
@@ -124,6 +143,8 @@ Route::get('/{reg_code}', function ($regCode) {
     return view('contractor')->with('contractor', $contractor ?? null)->render();
 
 });
+
+Route::resource('contractor', \App\Http\Controllers\ContractorController::class);
 
 function syncContractor($data)
 {

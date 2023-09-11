@@ -20,7 +20,7 @@
                     {{--                        </h4>--}}
 
                     @foreach($contractors as $contractor)
-                        <div class="item">
+                        <div class="item{{ $contractor->is_active ? ' active' : '' }}">
                             <a href="/{{ $contractor->reg_code }}">Реквизиты {{ $contractor->is_company ? '' : 'ИП ' }} {{ $contractor->name }}, УНП {{ $contractor->reg_code }}</a>
                         </div>
                     @endforeach

@@ -68,15 +68,93 @@
 
                                     <tr>
                                         <td>Телефон</td>
-                                        <td itemprop="telephone">{{ $contractor->phone ?? '-' }}</td>
+
+                                        @if(request()->has('edit'))
+                                            <td itemprop="telephone">
+                                                <form action="{{ route('contractor.update', $contractor) }}" method="post" autocomplete="off">
+                                                    @csrf
+                                                    @method('patch')
+
+                                                    <input type="text" name="phone" style="width: 100%;" value="{{ $contractor->phone ?? '' }}">
+                                                </form>
+                                            </td>
+                                        @else
+                                            <td itemprop="telephone">{{ $contractor->phone ?? '-' }}</td>
+                                        @endif
                                     </tr>
 
                                     <tr>
                                         <td>Электронная почта</td>
-                                        <td><span itemprop="email">{{ $contractor->email ?? '-' }}</span></td>
+
+                                        @if(request()->has('edit'))
+                                            <td itemprop="email">
+                                                <form action="{{ route('contractor.update', $contractor) }}" method="post" autocomplete="off">
+                                                    @csrf
+                                                    @method('patch')
+
+                                                    <input type="text" name="email" style="width: 100%;" value="{{ $contractor->email ?? '' }}">
+                                                </form>
+                                            </td>
+                                        @else
+                                            <td><span itemprop="email">{{ $contractor->email ?? '-' }}</span></td>
+                                        @endif
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>Вебсайт</td>
+
+                                        @if(request()->has('edit'))
+                                            <td itemprop="website">
+                                                <form action="{{ route('contractor.update', $contractor) }}" method="post" autocomplete="off">
+                                                    @csrf
+                                                    @method('patch')
+
+                                                    <input type="text" name="website" style="width: 100%;" value="{{ $contractor->website ?? '' }}">
+                                                </form>
+                                            </td>
+                                        @else
+                                            <td><span itemprop="website">{{ $contractor->website ?? '-' }}</span></td>
+                                        @endif
+
                                     </tr>
 
                                 </table>
+
+
+
+                                @if($contractor->bankAccounts->count())
+                                    <h4>Банковские реквизиты</h4>
+                                @endif
+
+
+                                @foreach($contractor->bankAccounts->load(['bank']) as $account)
+                                    <table class="table table-bordered">
+
+                                        <tr>
+                                            <td>Банк</td>
+
+                                            <td itemprop="telephone">{{ $account->bank->contractor->name ?? '-' }}</td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td>БИК</td>
+
+                                            <td><span itemprop="email">{{ $account->bank->swift ?? '-' }}</span></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td>Вебсайт</td>
+
+
+                                            <td><span itemprop="email">{{ $account->number ?? '-' }}</span></td>
+
+                                        </tr>
+
+                                    </table>
+                                @endforeach
 
 
                             </div>
@@ -90,6 +168,9 @@
                         Ничего не найдено.
                     @endif
 
+                    <span style="font-size: 0.8em; color: #ccc; text-align: right; float: right;">
+                        Последнее обновление записи: {{ $contractor->updated_at->format('d.m.Y') }}
+                    </span>
                 </div>
 
             </div>

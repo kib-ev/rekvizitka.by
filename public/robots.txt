@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /page/*
+Disallow: /api/*
 Allow: /page$
 Allow: /page/$

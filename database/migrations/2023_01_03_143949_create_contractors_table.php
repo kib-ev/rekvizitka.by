@@ -19,16 +19,16 @@ return new class extends Migration
             $table->string('name')->nullable();;
             $table->string('full_name', 300)->nullable();;
             $table->string('reg_code', 9)->unique()->index();
-            $table->string('soc_code')->nullable();;
-            $table->string('stat_code')->nullable();;
             $table->string('registration_date')->nullable();
             $table->string('registration_authority')->nullable();
 
             $table->string('exclude_date')->nullable();
             $table->string('address')->nullable();
             $table->string('post_address')->nullable();
+
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->string('website')->nullable();
 
             $table->string('state')->nullable();
             $table->tinyInteger('state_code')->unsigned()->nullable();

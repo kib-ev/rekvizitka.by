@@ -24,8 +24,11 @@
         body {
             font-family: 'Nunito', sans-serif;
         }
-        .item a {
+        .item.active a {
             color: #0a0;
+        }
+        .item a {
+            color: #dd1111;
             display: inline-block;
             margin-bottom: 10px;
         }
@@ -53,6 +56,8 @@
 
         gtag('config', 'G-KZWE2RBRP1');
     </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1086243505732272" crossorigin="anonymous"></script>
 
 </head>
 <body>

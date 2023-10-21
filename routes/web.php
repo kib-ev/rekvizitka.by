@@ -123,13 +123,42 @@ Route::get('/banks', function () {
     return view('banks.index', compact('banks'));
 });
 
+Route::get('/info/{date_from}/{date_to}', function ($dateFrom, $dateTo) {
+
+    $content = file_get_contents(base_path('/tmp/base_info.txt'));
+
+    $data = collect(json_decode($content, 1));
+
+    $items = $data->pluck('ngrn');
+
+    foreach ($items as $item) {
+        dispatch(new \App\Jobs\SyncContractor($item));
+    }
+
+    dd(2);
+
+});
 
 // https://egr.gov.by/api/v2/egr/getJurNamesByPeriod/2023-01-01/2023-01-30
 
+Route::get('/{reg_code}/email', function ($regCode) {
+    $contractor = \App\Models\Contractor::where('reg_code', $regCode)->firstOrFail();
+    return ['email' => $contractor->email];
+});
+
+Route::get('/{reg_code}/phone', function ($regCode) {
+    $contractor = \App\Models\Contractor::where('reg_code', $regCode)->firstOrFail();
+    return ['phone' => $contractor->phone];
+});
 
 Route::get('/{reg_code}', function ($regCode) {
 
     $contractor = \App\Models\Contractor::where('reg_code', $regCode)->firstOrFail();
+
+
+    if(1) {
+        $content = file_get_contents_ssl("https://checko.ru/search?query=" . $regCode);
+    }
 
     if (/*!$contractor || */ request()->has('update')) {
         $content = file_get_contents_ssl("https://egr.gov.by/egrmobile/api/search/checkStatusSubject?pan=$regCode");

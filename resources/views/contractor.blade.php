@@ -40,9 +40,15 @@
 
                             <div class="text fs12" style="margin-bottom: 15px;">
                                 <table class="table table-bordered">
+                                    @if(request()->has('info'))
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>{{ $contractor->id }}</td>
+                                        </tr>
+                                    @endif
 
                                     <tr>
-                                        <td>УНП</td>
+                                        <td style="width: 250px;">УНП</td>
                                         <td>{{ $contractor->reg_code }}</td>
                                     </tr>
 
@@ -79,7 +85,15 @@
                                                 </form>
                                             </td>
                                         @else
-                                            <td itemprop="telephone">{{ $contractor->phone ?? '-' }}</td>
+                                            <td>
+                                                @if($contractor->phone)
+                                                    <span itemprop="telephone">
+                                                        <a class="js-show-phone" href="#">показать</a>
+                                                    </span>
+                                                @else
+                                                    <span itemprop="telephone">-</span>
+                                                @endif
+                                            </td>
                                         @endif
                                     </tr>
 
@@ -96,7 +110,15 @@
                                                 </form>
                                             </td>
                                         @else
-                                            <td><span itemprop="email">{{ $contractor->email ?? '-' }}</span></td>
+                                            <td>
+                                                @if($contractor->email)
+                                                    <span itemprop="email">
+                                                        <a class="js-show-email" href="#">показать</a>
+                                                    </span>
+                                                @else
+                                                    <span itemprop="email">-</span>
+                                                @endif
+                                            </td>
                                         @endif
 
                                     </tr>
@@ -133,25 +155,21 @@
 
                                         <tr>
                                             <td>Банк</td>
-
-                                            <td itemprop="telephone">{{ $account->bank->contractor->name ?? '-' }}</td>
-
+                                            <td colspan="2" itemprop="telephone">{{ $account->bank->name ?? '-' }}</td>
                                         </tr>
 
-                                        <tr>
-                                            <td>БИК</td>
-
-                                            <td><span itemprop="email">{{ $account->bank->swift ?? '-' }}</span></td>
-
-                                        </tr>
+{{--                                        <tr>--}}
+{{--                                            <td>БИК</td>--}}
+{{--                                            <td><span itemprop="email">{{ $account->bank->swift ?? '-' }}</span></td>--}}
+{{--                                        </tr>--}}
 
                                         <tr>
-                                            <td>Вебсайт</td>
-
-
+                                            <td>Номер счета</td>
                                             <td><span itemprop="email">{{ $account->number ?? '-' }}</span></td>
 
+                                            <td>{{ $account->currency ?? '-' }}</td>
                                         </tr>
+
 
                                     </table>
                                 @endforeach

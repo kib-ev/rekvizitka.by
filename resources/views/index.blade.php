@@ -28,7 +28,7 @@
             color: #0a0;
         }
         .item a {
-            color: #dd1111;
+
             display: inline-block;
             margin-bottom: 10px;
         }
@@ -41,6 +41,16 @@
         a.logo img {
             width: 50px;
         }
+        a {
+            color: #0a0;
+        }
+        a:hover {
+            color: #018901;
+        }
+        .item.liquidated a, .item.liquidated a:hover {
+            color: #dc3545;
+        }
+
         a.page {
             color: #ccc;
             text-decoration: none;
@@ -57,7 +67,10 @@
         gtag('config', 'G-KZWE2RBRP1');
     </script>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1086243505732272" crossorigin="anonymous"></script>
+{{--    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1086243505732272" crossorigin="anonymous"></script>--}}
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/all.js"></script>
 
 </head>
 <body>

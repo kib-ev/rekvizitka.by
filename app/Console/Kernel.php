@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('sitemap:generate')->dailyAt('23:00');
 
-        $schedule->command('queue:supervisor')->everyMinute();
+        $schedule->command('queue:supervisor 5')->everyMinute(); // --log
     }
 
     /**
